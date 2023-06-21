@@ -1,13 +1,11 @@
-import { PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
-// import { prismaContext } from 'lib/prisma';
+import { prismaContext } from 'lib/prisma';
 import { getFilms } from 'services/prisma';
 
 const films = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
     return new Promise((resolve) => {
-      const prismaContext = new PrismaClient();
-      getFilms({ prisma: prismaContext })
+      getFilms(prismaContext)
         .then((films) => {
           res.status(200).json(films);
           resolve('');
