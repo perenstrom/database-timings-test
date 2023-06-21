@@ -13,6 +13,7 @@
     "prisma:generate": "prisma generate",
     "prisma:push:local": "dotenv -e .env.local -- npm run prisma:push",
     "prisma:push": "prisma db push",
+    "prisma:pull": "prisma db pull",
     "postinstall": "prisma generate"
   },
   "dependencies": {

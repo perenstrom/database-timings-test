@@ -1,13 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prismaContext } from 'lib/prisma';
-import { getFruits } from 'services/prisma';
+import { getFilms } from 'services/prisma';
 
-const fruits = async (req: NextApiRequest, res: NextApiResponse) => {
+const films = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
     return new Promise((resolve) => {
-      getFruits(prismaContext)
-        .then((fruits) => {
-          res.status(200).json(fruits);
+      getFilms(prismaContext)
+        .then((films) => {
+          res.status(200).json(films);
           resolve('');
         })
         .catch((error) => {
@@ -21,4 +21,4 @@ const fruits = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default fruits;
+export default films;
