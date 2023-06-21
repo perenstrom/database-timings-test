@@ -16,7 +16,7 @@ import {
   TableBody
 } from '@mui/material';
 import { film } from '@prisma/client';
-import { getFilms } from 'services/local';
+import { getFilms, getHelloWorld } from 'services/local';
 
 const IndexPage: NextPage<{}> = () => {
   const [isLoadingFilms, setIsLoadingFilms] = React.useState<boolean>(false);
@@ -27,10 +27,17 @@ const IndexPage: NextPage<{}> = () => {
   const [timingX5, setTimingX5] = React.useState<number[]>([]);
   const [timingFEX5, setTimingFEX5] = React.useState<number[]>([]);
 
+  const [isLoadingHelloWorld, setIsLoadingHelloWorld] =
+    React.useState<boolean>(false);
+  const [timingHelloWorldFEX5, setTimingHelloWorldFEX5] = React.useState<
+    number[]
+  >([]);
+
   const resetAll = () => {
     setFilms([]);
     setTiming(0);
     setFilmsX5([]);
+    setTimingHelloWorldFEX5([]);
   };
 
   const handleFetchFilms: React.MouseEventHandler<HTMLButtonElement> = async (
@@ -79,6 +86,43 @@ const IndexPage: NextPage<{}> = () => {
     setTimingX5([timing1, timing2, timing3, timing4, timing5]);
     setTimingFEX5([timingFE1, timingFE2, timingFE3, timingFE4, timingFE5]);
     setIsLoadingFilms(false);
+  };
+
+  const handleFetchHelloWorldX5: React.MouseEventHandler<
+    HTMLButtonElement
+  > = async (e) => {
+    resetAll();
+    setIsLoadingHelloWorld(true);
+    e.preventDefault();
+
+    let now = performance.now();
+    await getHelloWorld();
+    const timingFE1 = performance.now() - now;
+
+    now = performance.now();
+    await getHelloWorld();
+    const timingFE2 = performance.now() - now;
+
+    now = performance.now();
+    await getHelloWorld();
+    const timingFE3 = performance.now() - now;
+
+    now = performance.now();
+    await getHelloWorld();
+    const timingFE4 = performance.now() - now;
+
+    now = performance.now();
+    await getHelloWorld();
+    const timingFE5 = performance.now() - now;
+
+    setTimingHelloWorldFEX5([
+      timingFE1,
+      timingFE2,
+      timingFE3,
+      timingFE4,
+      timingFE5
+    ]);
+    setIsLoadingHelloWorld(false);
   };
 
   return (
@@ -159,6 +203,64 @@ const IndexPage: NextPage<{}> = () => {
                   <TableRow>
                     <TableCell>Database</TableCell>
                     {timingX5.map((ms, i) => (
+                      <TableCell key={i}>{`${Math.round(ms)}ms`}</TableCell>
+                    ))}
+                  </TableRow>
+                </TableBody>
+              </Table>
+            )}
+          </Box>
+        </Paper>
+      </Box>
+
+      <Box mt={6}>
+        <Paper>
+          <Box p={2}>
+            <Typography variant={'h1'} pb={2}>
+              Fetch hello world from api function
+            </Typography>
+            <Stack spacing={2} direction="row">
+              <Button
+                variant="contained"
+                onClick={handleFetchHelloWorldX5}
+                disabled={isLoadingHelloWorld}
+              >
+                Fetch 5 times
+              </Button>
+            </Stack>
+            {isLoadingHelloWorld && (
+              <Box>
+                <CircularProgress />
+              </Box>
+            )}
+            {timingHelloWorldFEX5.length > 0 && (
+              <p>
+                Fetched &quot;hello world&quot; {timingHelloWorldFEX5.length}{' '}
+                times in a mean time of{' '}
+                <b>
+                  {Math.round(
+                    timingHelloWorldFEX5.reduce((a, b) => a + b, 0) /
+                      timingHelloWorldFEX5.length
+                  )}
+                  ms
+                </b>
+              </p>
+            )}
+
+            {timingHelloWorldFEX5.length > 0 && (
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell></TableCell>
+                    {timingHelloWorldFEX5.map((ms, i) => (
+                      <TableCell key={i}>Fetch {i + 1}</TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>Time</TableCell>
+                    {timingHelloWorldFEX5.map((ms, i) => (
                       <TableCell key={i}>{`${Math.round(ms)}ms`}</TableCell>
                     ))}
                   </TableRow>

@@ -16,3 +16,15 @@ export const getFilms = async () => {
 
   return result as { data: film[]; timing: number };
 };
+
+export const getHelloWorld = async () => {
+  const url = `/api/metrics`;
+  const options: RequestInit = {
+    method: 'GET',
+    headers: defaultHeaders
+  };
+
+  const result = await fetch(url, options).then((r) => r.json());
+
+  return result as { data: string };
+};
