@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 
 export const config = {
-  runtime: 'edge'
+  runtime: 'edge',
+  regions: ['fra1']
 };
 
 const metrics = async () => {
