@@ -18,7 +18,7 @@ export const getFilms = async () => {
 };
 
 export const getHelloWorld = async () => {
-  const url = `/api/metrics`;
+  const url = `/api/metrics_edge`;
   const options: RequestInit = {
     method: 'GET',
     headers: defaultHeaders
