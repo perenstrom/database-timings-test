@@ -6,7 +6,7 @@ const defaultHeaders = {
 };
 
 export const getFilms = async () => {
-  const url = `/api/films`;
+  const url = `/api/films_simple`;
   const options: RequestInit = {
     method: 'GET',
     headers: defaultHeaders
