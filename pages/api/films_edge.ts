@@ -1,16 +1,21 @@
 import { prismaContext } from 'lib/prisma_edge';
-import { getFilms } from 'services/prisma';
-import { NextResponse } from 'next/server';
-
+import { getFilmsEdge } from 'services/prismaEdge';
+ 
 export const config = {
   runtime: 'edge',
   regions: ['fra1']
-};
+}
+ 
+export default async function handler() {
+  const result = await getFilmsEdge(prismaContext);
 
-const films = async () => {
-  getFilms(prismaContext).then((films) => {
-    NextResponse.json(films);
-  });
-};
-
-export default films;
+  return new Response(
+    JSON.stringify(result),
+    {
+      status: 200,
+      headers: {
+        'content-type': 'application/json',
+      },
+    }
+  )
+}
