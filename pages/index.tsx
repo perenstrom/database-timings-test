@@ -5,6 +5,7 @@ import { Container } from '@mui/material';
 import { Films } from 'components/Films';
 import { HelloWorld } from 'components/HelloWorld';
 import { HelloWorldEdge } from 'components/HelloWorldEdge';
+import { FilmsEdge } from 'components/FilmsEdge';
 
 const IndexPage: NextPage<{}> = () => {
   return (
@@ -13,6 +14,7 @@ const IndexPage: NextPage<{}> = () => {
         <title>Database Speed Test</title>
       </Head>
       <Films />
+      <FilmsEdge />
       <HelloWorld />
       <HelloWorldEdge />
     </Container>

@@ -1,4 +1,4 @@
-import { prismaContext } from 'lib/prisma';
+import { prismaContext } from 'lib/prisma_edge';
 import { getFilms } from 'services/prisma';
 import { NextResponse } from 'next/server';
 
